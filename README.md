@@ -35,3 +35,20 @@
 
 ### DNS
 <img width="983" alt="image" src="https://user-images.githubusercontent.com/49769190/175290725-a9e7bcc9-1124-4a71-9bbf-49cffee8a8fd.png">
+
+
+
+  #### netstat
+  <img width="682" alt="image" src="https://user-images.githubusercontent.com/49769190/175333617-dad56b09-2b01-4976-80a9-8dac5647091a.png">
+
+  #### ping
+  <img width="682" alt="image" src="https://user-images.githubusercontent.com/49769190/175333701-0da71f68-92f6-413f-b9ba-d0e7884ee5db.png">
+  * KT : 168.126.63.1
+  * SKT : 210.220.163.82
+  * LG : 61.41.153.2
+
+  #### ICMP
+  <img width="983" alt="image" src="https://user-images.githubusercontent.com/49769190/175336407-5b5a8164-ab11-44c8-8f5f-1c6ff992ecbf.png">
+  
+  #### c
+
