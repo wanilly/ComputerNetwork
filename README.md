@@ -8,9 +8,9 @@
   ![image](https://user-images.githubusercontent.com/49769190/175812787-80954426-e7c3-4b9d-8b8f-c34ba06e731b.png)
   ### 2. Internet Protocol
   layer 5, 6, 7을 하나로 묶어서 이해하는 모델
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/4051e464414839151978b2f6aec4600b7d061be4a3e09722b72151a6f9c94bbe-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175812819-1986d29d-ca22-42d9-b3c4-8fd418f70ebe.png)
 
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/c8564b16e0d3d7770c8a0fb8f3b410eb4b9ca5bc6a288cfefc64f3d88079c562-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175812828-f6072c47-8e45-4d2a-862b-22ba6eced53b.png)
   * transport layer는 logical connection 하고 있는 것으로 양단 사이의 devices은 이 연결을 몰라도 됨.
   * 논리적 연결이 아니라 물리적 연결이 필요(네트워크 layer)
 
@@ -54,8 +54,8 @@
    * 연결 지향 서비스
    * 가상 연결은 데이터그램을 보내기 전에 경로를 미리 준비해 둠 -> 미리 세팅한 경로가 가상 회선
    * 각 패킷은 패킷내부에 담겨있는(incoming) 라벨을 확인 -> 포워딩 테이블에 그 라벨에 해당되는 outgoing 라벨을 찾아 보냄
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/d6f7eefdebc53bb30c884c4c57cf3cf8f5b06f3c88b21ff86007b57a7d1acb14-image.png)  
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/1e1bbbeff1d3daa61a681c26412de15408ef8037c53000e05d52da76dab2564e-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175812852-54a3da2d-0dad-491f-ae05-26181ff68900.png)
+![image](https://user-images.githubusercontent.com/49769190/175812867-c75cf122-b661-49fd-946e-dad48984e0f4.png)
 
 
    #### Datagram approach
@@ -70,18 +70,19 @@
     * IPv4 주소: 32bits, 전세게의 하나뿐인 유일한 주소이다. 약 40억개의 주소가 존재한다.
  
       원래 IP주소는 binary 형태의 32bits 숫자이다. 이를 byte 단위로 끊어서 10진법으로 표현하여 사용한다.
-      
-  ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/f7e56b93ee70eb2ac336666a9e2766f245e8d40ccef264d7991cf6e758033ed2-image.png)
+
+![image](https://user-images.githubusercontent.com/49769190/175812892-db1b359a-70b1-4c23-bef9-749d51371c58.png)
+
 
     ** 2진법을 10진법으로 
     128, 192, 224, 240은 알고 있자!
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/d11d329713928c86a5c94776859eb816615a72cf0666ae6ad6145907c435d12d-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175812908-943ce4a9-1c30-4c1d-8ce3-df33ca005419.png)
     * IPv4는 4byte로 표현해야 함, 0 ~ 255 사이의 10진수 .으로 구분하여 나타냄, 0.0.0.0 ~ 255.255.255.255
     
     
   ### IPv6 주소
     IPv6에서 주소 길이를 128비트, 보통 16진수 8개를 쓰고 :로 구분한다
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/898de27caf5b185e070fdb67e7b1d5adcf36f0cc9ce01dc178a11e21f5e3f059-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175812926-acb42cf0-c708-4978-b12a-978831e43a72.png)
 
 
   ### IP 주소의 클래스?
@@ -89,7 +90,7 @@
    IP 주소를 3개의 클래스로 나누는 이유는 네트워크 크기에 따른 구분이라고 생각하자!
    하나의 네트워크에서 몇 개의 호스트 IP까지 가질 수 있는 가에 따라 클래스를 나눌 수 있음.
   
-  ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/9084e58339c5ed9c0e02608dbe0f1a4f77e1c8580f20ad631fb0125845cb2cd1-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175812935-5ef5d077-d884-4536-8764-7bbd99cf473d.png)
   IP주소 클래스는 총 5개로 구분된다. A클래스, B클래스, C클래스, D클래스, E클래스 등이 있다. 그러나 보통 A, B, C 3개 정도만 알고 있으면 됨.
   
   ### A클래스
@@ -107,21 +108,19 @@
   ### C클래스
   반드시 110으로 시작함. 2진수로 표현하면 110X XXXX. XXXX XXXX. XXXX XXXX. XXXX XXXX
   
-  
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/8ade52f9f7f37b50081a6384c1628aa4526899300c64d887b98291fcbd86c679-image.png)
-
+  ![image](https://user-images.githubusercontent.com/49769190/175812948-b3e0a13d-84d7-4caf-8aa4-b6004fac0c6d.png)
 
 
 ## Delivery and Forwarding of IP packets
   ### Direct Delivery
-  ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/238bfe7e5f8ac696419e10d649caf43ab9ee3a8da5d1115e16c2cb517b2e1d73-image.png)
+  ![image](https://user-images.githubusercontent.com/49769190/175812970-a8d9f478-edaf-4ea4-93b2-23e00165e8dc.png)
   
   * 같은 link(Physical Network)에 연결된 노드로부터 패킷을 직접 전달받는 형태를 말함 / 패킷을 전달한 노드를 deliverer(전달자)
   * Link 내 통신에서 전달자는 다른 호스트가 될 것이고 외부 인터넷을 통해 유입된 패킷의 전달자는 해당 Link의 라우터가 될 것임
   * 패킷이 갖고 있는 목적지 IP주소의 Network 필드와 전달자의 주소의 Network 필드는 일치할 것임 -> 같은 물리네트워크 안의 노드임
 
   ### Direct Delivery
-  ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/4ab2fc7bde839a6eb5687b9592b6b3942c099fd8daa39636bf09010371cd36d1-image.png)
+  ![image](https://user-images.githubusercontent.com/49769190/175812977-ee3bff02-33a0-4824-a6a5-aae0c1ed4718.png)
   
    * 소스와 목적지가 서로 다른 네트워크에 위치, 패킷은 다수의 네트워크를 경유하며 전송됨 / 목적지가 해당된 네트워크를 제외한 모든 경유지에서 전달되는 형태를 간접 전달이라고 함
    * 간접 전달 과정에서는 다른 네트워크의 스위치에 전송되지 않고, 라우터와 라우터 사이로 이동하게 됨
@@ -141,7 +140,7 @@
    * 다음 경로만 생각함으로써, 목적지가 전송 경로상의 어떤 네트워크에 변화가 일어나 라우팅 테이블을 수정할 필요없음 / 처리 속도 또한 유지
    
    2. Next-Specific Routing Table
-   ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/cb442d5db2fe315cec6832fe5591bd54801a598fc29f21ab141f77822268b996-image.png)
+   ![image](https://user-images.githubusercontent.com/49769190/175813023-0de02bee-6f4b-4a1d-80a7-9aea1277734f.png)
    
    * 같은 네트위크에 연결된 모든 호스트에 대한 interface, NHA 주소 엔트리를 갖는 대신, 같은 네트워크에 연결된 모든 호스트를 하나의 엔트리로 간주하는 방식
    * 네트워크 지정 라우팅 테이블은 호스트 지정 라우팅 테이블보다 간결한 형태로 유지되어 처리속도에서 큰 차이가 남
@@ -151,7 +150,7 @@
    * 다른 특별한 이유로 인해 효율성을 희생하는 방식임
    
    4. Default Method
-   ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/d15e114a660b076f9af65c8f14d48c9a7b040684b5efa7f7d3af983f092e5268-image.png)
+   ![image](https://user-images.githubusercontent.com/49769190/175813039-3c36f20a-7726-42c7-ab3e-648603f468ce.png)
    
    * 몇 가지 목적지에 대한 entry를 따로 정의하고 자주 보내지는 경로를 디폴트로 지정하는 방법
    * 디폴트 엔트리의 네트워크 주소와 마크는 0.0.0.0임
@@ -166,9 +165,8 @@ Example)
  2. 201.4.22.35
  3. 18.24.32.78
 
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/3423283b53628f6c341faefdeebff7624cdbee5f80237bbcc01187f1066292ef-image.png)
-
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/6b0f3798ca29c6f8d8ac0e7e2fc389a981f45d17af75902911044591ce1fb093-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175813051-49a79624-5562-4d9f-b020-bad9980779c8.png)
+![image](https://user-images.githubusercontent.com/49769190/175813057-e835782c-246f-4487-9f26-470481846031.png)
 
  1) 180.70.65.140 = 180.70.65.10001100 -> (180.70.65.128)
  * 두 번째 엔트리의 네트워크 주소와 일치
@@ -193,9 +191,8 @@ Example)
 
   * core Network(beakbone)의 라우터부터 local Network의 라우터까지 각 라우터마다의 라우팅 테이블에 계층적 구조를 적용한 모델
   * 각 각의 라우터에서는 하위 계층 네트워크의 세부사항을 고려하지 않음으로써, 라우팅 테이블의 엔트리 수를 줄여 처리 속도를 높임
-  
-     
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/aed43e1b73e6c8dc663082cc14a03a3fa294b4d45c6a5329413e9a86951d61e2-image.png)
+  ![image](https://user-images.githubusercontent.com/49769190/175813072-ceb4ee49-5ec2-4317-9588-bf0abefe2b63.png)
+
 
   * regional ISP에서 small ISP의 Customer까지 이르는 계층적 라우팅 형태 도식
   * regional ISP는 120.14.64.0/18 주소 (2^14개 주소)를 할당받아 4개의 block으로 subnetting함(4개의 Block으로 Subnetting했으므로, 네트워크 필드에 2Bit가 추가)
@@ -214,12 +211,11 @@ Example)
 
 
 ### 라우터의 설계구조
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/604276d1b8b3a3261dd9e8ec38bd4538714f0efe13f3115846b08eb38ba6d579-image.png)
-
+![image](https://user-images.githubusercontent.com/49769190/175813081-22539048-7323-4a9f-a205-1ffbeeea915b.png)
 
 
 ### Internet Protocol Version4(IPv4)🔥
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/16829eb3725dd3c9102ebcd6484d6f5cf4a5e8917b7ef4d1452f8cba71775561-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175813087-b3ed391f-4323-438f-abc4-1788cbf95741.png)
 
 * L3에 속하는 프로토콜로, 현재 버전(IPv4)와 버전 6(IPv6)가 공존해있는 상황임
 * L2로부터 전달받은 Frame을 라우팅 테이블을 참조하여 현재 Host 보내진 패킷이면 처리하여 L4로 올리고 다른 호스트를 목적지로 하는 패킷이면 적절한 인터페이스 주소와 NHA를 검색하여 패킷을 전달함
@@ -232,14 +228,13 @@ Example)
 
 
 ### Datagrams (IP-Datagram Header Structure)
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/7b9437375453da42a73865ab29d1a93c7316ff8c88c186a80025d55d67ddeecf-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175813096-6a7272ee-0386-4741-8cf3-0d4fe4979fda.png)
 
 * IP Datagram(L3 패킷)에서 헤더의 길이느 20 ~ 60Byte로 구성 (표준 헤더는 20Byte 크기임. 최대 40Byte가 추가됨)
 * L3 패킷에서 데이터의 길이는 0 ~ 65515Byte로 구성
 * L3 패킷의 최소 길이는 20Byte, 최대 2^16 - 1Byte로 구성
 
-
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/45720cbe26ec86a814365f55826e2631a02931161578142bc525a5380c47eaa9-image.png)
+![image](https://user-images.githubusercontent.com/49769190/175813107-0fe51a09-a4c4-4b26-ad82-c22820d53ba9.png)
 * 그림에서 하나의 Row는 4Byte 크기 / 흰색 바탕의 내용들은 표준 헤더를 구성하는 요소들(5 Rows를 구성하고 있으므로, 표준 헤더의 크기는 20Byte) 
 * 회색 바탕의 내용은 옵션 헤더를 구성(옵션 헤더는 0 ~ 40Byte 사이의 크기)
 
@@ -259,3 +254,8 @@ Example)
 10. Source / Destination IP Address: 각각 32 비트로 이루어지며 송신과 수신자의 IP 주소가 기록되어 있음.
 
 
+
+### 참고🛹 
+* https://seungyooon.tistory.com/187
+* https://velog.io/@hidaehyunlee/IP-address%EB%9E%80
+* https://limkydev.tistory.com/168
