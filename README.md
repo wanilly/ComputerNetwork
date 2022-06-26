@@ -52,3 +52,11 @@
   
   #### c
 
+
+
+## 참고
+https://velog.io/@sms8377/TIL-24-Wireshark를-이용한-간단-패킷-분석
+https://10th-doctrine.tistory.com/355
+https://mikrkosmos97.tistory.com/3
+https://securitymanjoseph94.tistory.com/6
+https://jineer.tistory.com/50
