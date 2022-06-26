@@ -5,7 +5,7 @@
  
   ## Network Layers
   ### 1. OSI 7 Layers
-![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/c797d11fd5b98b9403071c7427db3c45c52e1de693f716653c23d42c287f6bfe-image.png)
+  ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/c797d11fd5b98b9403071c7427db3c45c52e1de693f716653c23d42c287f6bfe-image.png)
   ### 2. Internet Protocol
   layer 5, 6, 7을 하나로 묶어서 이해하는 모델
 ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/4051e464414839151978b2f6aec4600b7d061be4a3e09722b72151a6f9c94bbe-image.png)
@@ -245,7 +245,7 @@ Example)
 
 <span style="color:rgb(245, 235, 13)">데이터그램은 헤더부분과 상위 계층으로부터 받아온 데이터 부분으로 나뉨. 데이터 부분은 상위 계층에서 내려보낸 그대로 사용, 헤더 부분만 네트워크 계층에서 만들어 데이터 부분과 합쳐줌으로써 데이터그램을 만듦.</span>
 
-`1. VER (Version): IP 프로토콜의 버전을 의미합니다. IP 프로토콜은 IPv4와 IPv6가 현재 사용되고 있으며, 4자리 비트로 이루어져 있기 때문에, IPv4의 경우 0100, IPv6의 경우에는 0110으로 표기됨
+1. VER (Version): IP 프로토콜의 버전을 의미합니다. IP 프로토콜은 IPv4와 IPv6가 현재 사용되고 있으며, 4자리 비트로 이루어져 있기 때문에, IPv4의 경우 0100, IPv6의 경우에는 0110으로 표기
 2. HLEN (Header Length): 헤더의 길이를 알려주는 부분으로, 4 비트로 표현됨. 헤더는 헤더의 가장 마지막에 포함되는 옵션의 길이에 따라 옵션이 없으면 20바이트, 옵션이 최대로 추가되면 60바이트가 됨.
 3. Service Type: 해당 데이터그램의 지연, 우선순위, 신뢰성, 처리량 등의 정보를 담고 있는 필드입니다. 8 비트로 이루어져 있습니다.
 4. Total Length: 헤더와 데이터 부분을 합한 데이터그램의 전체 길이를 뜻함. 이 전체 길이 필드가 16 비트로 이루어지기 때문에, 데이터그램의 최대 길이는 2^16 -1, 즉 65,535비트(64KB)를 넘지 못함.
@@ -256,6 +256,6 @@ Example)
 7. TTL (Time to Live): TTL 필드는 쉽게 말해 수명을 알려주는 필드입니다. 데이터그램이 네트워크 상에서 다양한 이유로 목적지에 도착하지 못하고 네트워크를 떠도는 일이 생길 수 있음 이런 길을 잃은 데이터그램들이 늘어나면, 네트워크의 흐름을 방해할 수 있고, 상위 계층을 혼란시킬 수 있기 때문에 수명을 다한 데이터그램들은 자동으로 폐기됨 
 8. Protocol: 네트워크 계층의 상위 계층인 전송 계층이 사용하는 프로토콜에 대한 정보를 담고 있음. 8 비트로 구성되며, 대표적으로 UDP는 17, TCP는 6, ICMP는 1을 사용함
 9. Header Checksum: 헤더 체크섬은 헤더에 오류가 있는지를 확인하기 위한 16비트로 이루어진 필드임 데이터 링크 계층에서의 Error Control과 같은 역할을 한다고 볼 수 있음.
-10. Source / Destination IP Address: 각각 32 비트로 이루어지며 송신과 수신자의 IP 주소가 기록되어 있음`
+10. Source / Destination IP Address: 각각 32 비트로 이루어지며 송신과 수신자의 IP 주소가 기록되어 있음.
 
 
