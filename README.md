@@ -5,7 +5,7 @@
  
   ## Network Layers
   ### 1. OSI 7 Layers
-  ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/c797d11fd5b98b9403071c7427db3c45c52e1de693f716653c23d42c287f6bfe-image.png)
+  ![image](https://user-images.githubusercontent.com/49769190/175812787-80954426-e7c3-4b9d-8b8f-c34ba06e731b.png)
   ### 2. Internet Protocol
   layer 5, 6, 7을 하나로 묶어서 이해하는 모델
 ![image.png](https://boostnote.io/api/teams/KyrG5EEUe/files/4051e464414839151978b2f6aec4600b7d061be4a3e09722b72151a6f9c94bbe-image.png)
