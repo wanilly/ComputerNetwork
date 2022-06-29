@@ -254,8 +254,445 @@ Example)
 10. Source / Destination IP Address: 각각 32 비트로 이루어지며 송신과 수신자의 IP 주소가 기록되어 있음.
 
 
+### Unicast
+* 1:1 통신을 말하며 LAN 통신에서 송신자의 MAC과 수신자의 MAC 주소를 알 때 메시지를 전달함
+* 유니캐스트 메세징은 개인적이거나 고유한 리소스가 필요한 모든 네트워크 프로세스에서 사용될 수 있음
+* 한개의 목적지 MAC 주소를 사용하여 CPU 성능에는 문제를 주지 않음
+
+       단점 : 대량으로 배포되는 특정 네트워크 응용 프로그램에서 유니캐스트로 데이터를 전송할 경우, 각 각의 네트워크 연결마다 호스트의 컴퓨터 리소스를 소비할 뿐만 아니라 각각 다른 네트워크 대역폭을 필요로 하기 때문에 전송비용이 매우 높음
+
+### Broadcast
+* 정보의 전달 과정에서 송신자는 누군지 확실히 아나 수신자를 특정하지 않았을 때, 네트워크에 있는 모든 서버에게 정보를 알려야 할 때, 라우터끼리 정보를 교환하거나 새로운 라우터를 찾을 때, 브로드캐스팅 방식을 사용함.
+* 주소가 따로 정해져 있고, 수신 받는 목적지는 이 주소가 오면 패킷을 자신의 CPU로 전송해서 CPU가 패킷을 처리함. 네트워크에 있는 모든 목적지에 패킷이 전송되므로 트래픽이 증가, CPU 성능의 저하도 있음.
+* 메시지 브로드 캐스팅은 호스트가 고유한 IP 주소로 식별되는 다른 단일 호스트에 데이터 그램을 보내는 유니캐스트 주소 지정과는 별개로, 해당 브로드캐스트 주소를 사용하여 해당 주소 범위에 있는 전체 호스트에 트래픽을 전달함.
+
+
+### Multicast
+* 한번의 송신으로 메세지나 정보를 목표한 여러 컴퓨터에 전송하는 것을 말함. 1:N 전송방법임.
+* 수신자를 그룹화하여 해당 그룹에 해당하는 수신지만 유니캐스트 + 브로드 캐스트를 한다고 보면 되겠음.
+* 멀티 캐스트는 보통 IP 멀티캐스트 형태로 구현, 이는 스트리밍을 위한 인터넷 프로토콜 응용 프로그램 및 인터넷 TV에서 많이 사용됨. IP 멀티 캐스트는 주로 IP 라우팅 단계에서 구현되며, 이 때 라우터는 데이터그램을 멀티캐스트 대상 주소로 보내기 위한 최적의 전송 경로를 생성함.
+* IP 멀티 캐스트는 네트워크상의 IP 인프라를 통해 일대다 통신을 위한 기술, 멀티캐스트는 소스로부터 패킷을 한번만 전송하게 함으로써 네트워크 인프라를 효율적으로 사용하며, 이는 많은 수신자들에게 전송할 필요가 있을 때도 마찬가지임. 네트워크 상의 각 노드들은 필요한 경우에만 여러 수신자에 도달하는 패킷을 복제함.
+
+
+       *요약*
+       멀티캐스팅? 하나의 송신자와 특정 그룹에 속한 다수의 수신자와의 통신형태를 의미함. 각각의 주소 클래스는 유니캐스트은 A, B, C를 사용하고 D클래스는 멀티캐스트에서 사용하는 주소임. D클래스를 사용하는 멀티캐스트 주소에서는 유니캐스트의 주소를 받을 수도 있지만 멀티캐스트 주소를 부여받을 수 있음.
+       
+       1) 유니캐스팅 : 하나의 송신자, 하나의 수신자
+       2) 브로드캐스팅 : 하나의 송신자, 송신자 제외 모두 수신자
+       3) 멀티캐스팅 : 하나의 송신자, 특정 그룹에 속한 다수의 수신자
+
+
+
+### 멀티플 유니캐스팅
+멀티캐스팅과 유사한 개념으로 수신자가 10곳이라고 할 때 한명의 송신자가 유니캐스트 주소를 10개를 배정하여 패킷을 10곳 모두 보내는 방식으로 멀티캐스팅과 같은 효과임. 10,000곳, 100,000곳 점점 늘어나게 되면 처음 보낸 패킷과 마지막 패킷간의 지연시간이 발생하게 됨. 이외에도 1개만 보내도 되는 패킷을 만개 십만갰기 보내다보니 대역폭을 과대 소모하게 되는 단점!
+
+![image](https://user-images.githubusercontent.com/49769190/176349543-31266eeb-09f8-421c-b332-70f411be9738.png)
+
+
+#### 멀티캐스트 IP주소 체계
+
+      224.0.0.0 ~ 239.255.255.255 범위를 갖는 class D IP 주소를 사용함.
+![image](https://user-images.githubusercontent.com/49769190/176349642-08e104db-8772-4f75-bf3f-e2dba34773e6.png)
+
+* 그림은 한명의 송신자와 다수의 수신자가 존재하는 것을 알 수 있음. 여기서 멀티캐스팅의 송신자는 1개의 패킷을 보내지만, 멀티플 유니캐스팅에서는 애초에 출발할때 여러개의 패킷이 출발한다는 것을 볼 수 있음.
+
+***
+
+* 224.0.0.1 : 현재 서브넷에 존재하는 멀티캐스트가 가능한 모든 호스트를 지칭함.
+* 224.0.0.2 : 현재 서브넷에 존재하는 멀티캐스트가 가능한 모든 라우터를 지칭함.
+
+
+#### 멀티캐스트 MAC주소 체계
+멀티캐스트 MAC 주소는 앞에 0100.5E가 붙고 뒤에 주소들은 IP주소에 일부분을 참조하여 이루어진다. 예를 들어 227.35.189.34의 멀티캐스트 MAC주소는 0100.5E23.BD22가 됨.
+
+    227.35.189.34를 이진수로 표현하면 아래와 같음
+    11100011.0
+    0100011.10111101.00100010
+    -> 멀티캐스트 MAC 기본 주소 앞부분(0100.5E)을 제외하고 나머지는 위 파란색 부분과 매치
+    
+    00000001-00000000-01011110-0
+    0100011-10111101-00100010
+    -> 16진수: 01-00-5E-23-BD-22
+    
+#### 멀티캐스트 프로토콜
+어떤 장비와 멀티캐스트 정보를 교환하느냐에 따라 세 가지 프로토콜로 나눌 수 있음.
+
+* IGMP: 호스트와 라우터 간 멀티캐스트 정보를 교환하는 프로토콜
+* CGMP, IGMP snooping: 라우터와 스위치 간 멀티캐스트 정보를 교환하는 프로토콜
+* Multicasting Routing Protocol: 라우터와 라우터 간 멀티캐스트 정보를 교환하는 프로토콜
+
+
+![image](https://user-images.githubusercontent.com/49769190/176349684-de98c63b-1fe7-4d3c-8633-341d0384057b.png)
+
+* 멀티캐스트 그룹에 가입을 요청하는 메세지인 Membership Report, 탈퇴는 Leave Report 그리고 관리상 질의응답을 요청하는 경우에 사용하는 Query가 있다. Query의 종류는 General과 Special로 나뉨.
+
+<span style="color:green"></span>
+1) 멀티캐스트 라우터
+ * 네트워크에서 멀티캐스트를 관리하는 라우터를 멀티캐스트 라우터라고 부름. 멀티캐스트 라우터는 네트워크에 있는 컴퓨터 중 어떤 것이 특정 멀티캐스트 크룹에 속하는지 목록을 가지고 있게 되고 그 목록에 따라 패킷을 송신 여부를 결정하게 됨.
+
+2) 그룹가입
+* 호스트는 그룹에 가입하기 위해 가입요청 메시지를 멀티캐스트 라우터에게 보내게 됨.
+* 예를 들어 화상회의를 한다고 가정해보자. 나는 화상회의를 위해 어플리케이션을 깔고 해당 어플리케이션을 더블클릭하여 실행하게 된다. 여기서 실행하기 위해서는 해당 화상회의의 패킷을 받아야 하는데 멀티캐스트 라우터에게 "나 화상회의 같이하려고 하니까 해당 패킷을 나에게 보내줘"라고 요청하여 받게 된다. 이 요청이 Membership Report가 되고 Membership Report 안에는 가입하고자 하는 특정 그룹의 주소를 함께보내게 된다.
+
+3) 그룹 탈퇴
+* 호스트는 탈퇴 요청 메시지를 멀티캐스트 라우터에게 송신하게 됨.
+* 여기서 탈퇴 요청을 받은 멀티캐스트 라우터는 해당 네트워크의 다른 호스트가 아직 그룹에 가입해 있는지를 확인한 후 없다면 그룹을 삭제하게 됨.
+
+      * 요약 *
+      (1) 호스트는 멀티캐스트 라우터에게 Leave Report 송신
+      (2) 라우터는 네트워크에 있는 모튼 컴퓨터에게 Special query를 보내 확인
+      (속해있는 호스트가 있을 때)
+      (3) 속해있는 호스트는 Membership Report를 보내 아직 가입해 있다는 것을 라우터에게 알린다
+      (속해있는 호스트가 없을 때)
+      (3) 아무도 응답을 안하게 되고
+      (4) 멀티캐스트 라우터는 해당 그룹을 삭제하게 된다.
+ 
+4) 그룹 모니터링
+* 만약, 정전이나 다른 이유에 의해서 컴퓨터가 다운됐을 경우에는 어떻게 될까? Leave Report를 보내지도 않았는데 갑자기 끊어지게 되면 멀티캐스트 라우터 입장에서는 아무도 쓰지 않는 그룹인데 계속해서 멀티캐스트 패킷을 보낼 수도 있다. 이럴 경우를 대비해서 멀티캐스트 라우터는 일반질의 메시지(General query)를 주기적으로 보내 그룹가입자를 모니터링 하게된다. 이때 이 메시지를 받은 모튼 시스템은 해당 그룹에 대한 가입상황을 보고해야하고 보고되지 않은 시스템들은 모두 삭제한다.
+
+
+#### 멀리캐스팅 라우팅
+* 유니캐스트 라우팅의 경우 라우터가 하나의 목적지에 대한 하나의 최적경로를 가지게 됨. 
+* 하지만, 멀티캐스트 라우팅은 라우터가 그룹에 대한 하나의 최적경로를 가지게 됨. 여기서 n개의 그룹이 있다면 n개의 최적경로가 필요하게 됨. 
+* 또한 해당 그룹에는 여러개의 네트워크가 있을 수 있으며, 이는 트리 구성하여 멀티캐스트 패킷을 전달하게 됨.
+
+1) 송신자 기반 트리(Source-Based trees)
+* 모든 멀티캐스트 라우터들이 각 그룹에 대해 멀티캐스팅 라우터 테이블을 모두 작성하는 것으로 각 라우터는 그룹별로 하나의 최적경로를 구성함.
+* 프로토콜: DVMRP(멀티캐스팅 라우팅 프로토콜로 RIP와 같이 거리 벡터 라우팅 방식을 사용), MOSPF(OSPF와 같이 링크상태 라우팅 방식), PIM-DM
+
+2) 그룹 공유 트리(Group-shared trees)
+* 동일한 트리를 각 그룹이 하나씩 가지고 이를 공유함
+* 각 라우터가 그룹별로 최적경로를 구성하는 것이 아니라 센터코어 라우터만 그룹에 대한 최적경로를 구성하게 됨.
+* 프로토콜: CBT, PIM-DM
+
+
+Example) An IP packet has arrived with the first 8bits as shown: 01000010
+receiver discards the packet why?
+
+- there is an error in this packet. the 4 left-most bits(0100) show the version, which is correct. the next 4 bits(0010) show the wrong header length(2X4= 8). The minimum number of bytes in the header must be 20. the packet has been corrupted in transmission.
+
+***
+
+
+### ICMP (IPv4)
+Internet Control Message Protocol
+L3의 Support Protocol 중 하나로, 패킷 송수신 중 오류가 발생되어 폐기되었음을 Source에게 알리는데 사용되는 프로토콜임.
+![image](https://user-images.githubusercontent.com/49769190/176350216-7d5f1729-cf23-4e5a-bf33-478afcd9976a.png)
+* ICMP 프로토콜 밑에 IP 프로토콜이 위치해있는데, 이는 ICMP메세지가 Frame(L2패킷)으로 구성될 때, IP프로토콜을 필히 거치게 됨을 의미함
+* IGMP는 Multi-Cating을 보조하기 위한 프로토콜임
+* ARP는 패킷의 NHA 주소에 해당되는 물리 주소로 변환되는 프로토콜임
+* IP프로토콜은 패킷 송수신 과정 중 문제가 발생했을 때, 오류를 보고 / 보정하는 기능을 제공하지 않음
+
+![image](https://user-images.githubusercontent.com/49769190/176350315-76105f5b-c3ba-4e31-8ec0-694070566ca4.png)
+* ICMP 메세지가 frame으로 구성될 때, IP 프로토콜에 의해 IP-datagram으로 재구성됨.
+
+#### ICMPv4 Message
+ ICMPv4 메세지는 Error-Reporting Message(오류 보고 메세지), Query Message로 구성됨.
+![image](https://user-images.githubusercontent.com/49769190/176350352-c0894162-9ecc-4c88-b265-a4b257dbee95.png)
+ * ICMP 메세지의 헤더는 총 8byte임.
+
+ 1. Type Field
+  오류의 종류 혹은 이유를 구분짓는 필드임
+ 2. Code Field
+  Type 필드에서 구분지은 종류를 더욱 세분화할 필요가 있을 시에 사용하는 필드임
+ 3. checksum Field
+  * Rest of the header Field
+      * type에 따라 여러 내용이 쓰여지는 필드임
+      * 필요에 따라 rest of the header 일부 혹은 전체가 사용됨
+  * Data section
+      * 오류 보고 / 질의에 따라 들어가는 내용이 다름
+
+![image](https://user-images.githubusercontent.com/49769190/176350383-ff545567-5e30-43ff-bec6-090fad5b3003.png)
+ * 오류 보고 메시지일 경우, Data Section에는 페기된 패킷의 IP-Header와 메시지의 초반 8byte(TCP/UDP 헤더)값이 첨부됨.
+ * Source는 Data section의 내용을 보고 자신에게 발생한 문제를 진단함.
+
+![image](https://user-images.githubusercontent.com/49769190/176350439-54ec9d26-9581-4fbd-8a1e-9a88866858d0.png)
+ * Error-Reporting Message(오류 보고 메시지): ICMP메시지가 오류보고메시지로 사용된다면 항상 Original Source에게만 전송됨
+
+#### Type3: Destination Unreachable
+![image](https://user-images.githubusercontent.com/49769190/176350492-554822f5-8f46-467a-b520-952e4bbcb1bb.png)
+* 패킷이 목적지의 프로세스에 도달하지 못하여 패킷이 폐기된 상황임
+* Code: 0에서 15 사이의 값을 갖는다. 16가지 문제를 분류할 수 있음 (code 2, 3은 목적지 노드와 연관된 문제, 나머지 code는 라우터와 연관된 문제임)
+* Code2: Unreachable Protocol 목적지의 IP의 상위 프로토콜에 문제가 발생한 상황
+* Code3: Unreachable Port L4의 프로토콜 (TCP/UDP)필드의 목적지 포트 번호에 해당되는 프로세스에 문제가 발생한 상황임.
+* Data Section : 폐기된 패킷의 IP의 헤더와 메시지의 초반 8byte가 첨부됨
+* Host Unreachable : 목적지 노드의 전원이 꺼져있어 발생하는 형태임
+*  Port Unreachable : 목적지 노드의 해당 프로세스에 문제가 발생한 형태이다. (Code 2 or 3)
+
+
+#### Type4: Source Quench
+![image](https://user-images.githubusercontent.com/49769190/176350517-222cea7e-020e-461b-aa4c-0aa1a514eadd.png)
+* 중간 경로의 라우터에서 버터 오버플로우가 발생한 상황 혹은 source와 Destination간의 통신 속도 차이로 인한 목적지 호스트에서의 버퍼 오버플로우(Flow problem)가 발생하여 패킷이 폐기된 상황임
+* Data Section: 폐기된 패킷의 IP헤더와 메시지의 초반 8byte가 첨부됨
+* 버퍼 오버플로우가 발생하면, 다수의 패킷이 누락되는데, 누락된 패킷 하나하나에 대한 quench 메시지가 source에게 전송됨
+* source quench 메시지를 받은 source는 quench 메시지를 받지 않을 때까지 패킷 전송 속도를 낮추게 됨
+* L4의 TCP 프로토콜에서 congestion과 flow control를 제공하기 때문에, source quench는 ICMPv6에서 사라짐.
+
+
+#### Type11: Time Exceeded
+![image](https://user-images.githubusercontent.com/49769190/176350552-671aa4b7-64b0-479b-9b9f-41b597a5abe2.png)
+* TTL값이 0이된 패킷을 라우터가 폐기된 상황(Code0)이거나, Fragmentation된 패킷들 전체가 정해진 시간 내에 목적지 호스트에 도착하지 못해 패킷이 폐기된 상황(code1)
+* Data Section: 폐기된 패킷의 IP 헤더와 메시지의 초반 8byte가 첨부됨
+
+#### Type12: Parameter Problem
+![image](https://user-images.githubusercontent.com/49769190/176350969-e0a386e5-acb0-469e-bc78-f3448d8aff48.png)
+* 패킷의 특정 필드에 문제가 생긴 상황(code0)이거나, IP 헤더의 프로토콜 필드를 해석할 수 없는 상황(Unknwon Protocol, code1)
+* pointer: 문제가 생긴 필드를 지목함
+* ICMP 메시지에 문제가 생긴 헤더부분을 알리는 정보가 첨부
+* Data Section : 폐기된 패킷의 IP 헤더와 메시지의 초반 8byte가 첨부됨
+
+#### Type5: Redirection
+![image](https://user-images.githubusercontent.com/49769190/176351023-1ffae0a6-ef5c-4893-a9ea-a2da5cc598a0.png)
+* 네트워크 상에 더욱 빠른 경로가 검색된 상황
+* code0: network-specific route(목적지 노드가 해당되는 네트워크로 메시지를 보내는 모든 경우, 타겟 라우터로 전송할 것을 지시)
+* Code 1 : Host-Specific Route (목적지 노드로 메시지를 보낼 경우, 타겟 라우터로 전송할 것을 지시)
+* Rest of the header : 더욱 빠른 경로에 해당되는 라우터의 주소(타겟 라우터)
+* Data Section : 기전송된 패킷의 IP 헤더와 메시지의 초반 8Byte가 첨부
+* Redirection 상황에서 패킷은 폐기되지 않고 정상적으로 Relaying(전송)
+    * 일반적인 Host의 라우팅 테이블은 그 크기가 작고 수정이 거의 일어나지 않는다. 이 때문에 네트워크 상의 신설 라우터 정보들을 실시간으로 반영하지 못하는데, 이러한 제약을 인근의 라우터가 Redirection 메세지를 통해 Host에게 알리는 메커니즘이다.
+    * Redirection은 본질적으로 오류가 아니므로, ICMPv6에서Redirection은 Informational Message로 재분류된다.
+    * Redirection Message는 Source가 속한 네트워크의 라우터만이 보낼 수 있다.
+
+#### Type8 or Type 0: Echo Request or Reply
+![image](https://user-images.githubusercontent.com/49769190/176351050-724a6ec3-b9d0-4839-b526-ca55ee78307e.png)
+* source가 destination에게 보낸 메시지를 destination이 다시 그대로 source에게 보내는 메시지임(echo-back)
+* echo reply 메시지에는 request 메시지의 identifier와 sequence number, optional data값이 그대로 복사됨
+* 네트워크 관리자가 IP 프로토콜이 정상적으로 동작하는지를 확인하기 위해 사용하는 메시지 형태임
+* timestamp 메시지와 더불어 echo 메시지를 통해서도 클라이언트가 RTT를 측정할 수 있음
+* 네트워크 관리 프로그램인 ping에서 source와 destination 사이의 네트워크가 원활히 동작하는가를 파악하기 위해 주로 이용되는 메시지 형태임
+
+#### Type13 or Type14 : Timestamp Request or Reply
+![image](https://user-images.githubusercontent.com/49769190/176351077-c4d77a78-6da7-45ca-8d53-404d039f8a33.png)
+* source와 destination의 시간을 동기화하기 위해 사용하는 메시지 형태임
+* timestamp reply 메시지에는 Request 메세지의 Identifier와 Sequence number 값이 그대로 복사
+* timestamp 메시지를 주고 받으며, 클라이언트는 RTT를 측정할 수 있으며, 서버의 시간과 동기화할 수 있음
+* timestamp Request or Reply 메시지는 ICMPv6에서 없어짐.
+* RTT(Round Trip Time) : 전송된 패킷을 되돌려받기까지 소요되는 시간이다. 타임 서버에서의 처리 시간은 포함되지 않
+
+
+### Mobile IP
+stationary Device를 인터넷에 연결시키는 IP 프로토콜을 이동통신 창치까지 확장시킨 개념
+
+Mobile IP는 두가지 addresses를 가지고 있음
+
+1. Home Network
+* Mobile Host(MH)의 베이스가 되는 네트워크를 의미
+* MH는 홈 네트워크의 Home Agent(홈 에이전트)로부터 Home Address(홈 주소, IMH)를 부여받아 인터넷과 통신
+* Home Agent는 Home Router에 위치하는 네트워크 S/W
+* 홈 주소는 다른 네트워크로 이동해도 수정/삭제 되지 않는 고유한 주솟값
+* Home Agent는 이동하는 MH를 Tracing한다. (즉, MH의 홈 주소와 현재 위치하고 있는 Foreign Network의 의탁 주소를 실시간으로 파악)
+
+2. Foreign Network(외지 네트워크)
+* 홈 네트워크 이외의 모바일 IP를 지원하는 네트워크를 의미
+* MH가 외지 네트워크에 들어오게 되면, 해당 외지 네트워크의 Foreign Agent(외지 에이전트)가 제공하는 Care-of Address(의탁 주소, ICoA)를 부여받아 인터넷과 통신
+* 의탁 주소를 부여받은 MH는 의탁 주소 정보를 Home Agnet에 저장시켜 Home Router가 지속적으로 MH를 Tracing 가능
+* Foreign Agent는 Foreign Route* 혹은 MH**에 위치한 네트워크 S/W(외지 라우터가 MH에 부여한 의탁 주소와 MH가 자체적으로 부여한 의탁 주소에는 차이가 있으나, 기본적으로 Net-ID에는 외지 네트워크의 네트워크 주소가 부여)
+
+![image](https://user-images.githubusercontent.com/49769190/176351111-7697d603-ccba-48c6-82d8-b86905a39822.png)
+
+
+#### Phases of Packet Relaying in Mobile Network as IPv4 (IPv4 모바일 네트워크에서 패킷이 전달되는 세 가지 단계)
+
+![image](https://user-images.githubusercontent.com/49769190/176351142-aa9b604e-61dd-4847-aa30-b0de259a8881.png)
+
+1. Phase 1. Agent Discovery
+
+* 모바일 IP를 지원하는 Router는 주기적으로 해당 네트워크에 라우터 광고 메시지를 전송한다.
+* MH는 광고 메시지를 통해 해당 네트워크의 네트워크 주소를 알 수 있다.
+* 외지 네트워크에서는 의탁 주소를 광고 메시지를 통해 전달받게 된다.
+
+      Router Advertisement Message(라우터 광고 메시지)
+      - Agent Advertisement Message(에이전트 광고 메시지)가 포함되어있다. 에이전트 광고 메시지속에는 해당 네트워크의 의탁 주소가 포함되어 있다.
+      - 해당 네트워크의 Net-ID가 포함되어 있다. (이를 통해, 현재 속한 네트워크를 구분할 수 있다.)
+      - 라우터에 의해 주기적으로 해당 네트워크에 뿌려지는 ICMP 메시지이다.
+
+      Router Solicitation Message(라우터 요청 메시지)
+      - MH가 라우터에게 보내는 메시지로, 자신이 속한 네트워크를 파악하기 위해 전송하는 ICMP 메시지이다.
+      - Router가 주기적으로 광고 메시지를 전송하고 있으므로, 오랫동안 광고 메시지를 수신하지 못한 경우에 요청 메시지를 전송하게 된다.
+      - Agent Solicitation Message(에이전트 요청 메시지)가 포함되어 있다.
+
+
+2. Phase 2. Registration
+* Foreign 네트워크에서 할당받은 의탁 주소를 Home Agent에 등록하는 절차이다.
+![image](https://user-images.githubusercontent.com/49769190/176366044-f74c3a8d-4ca0-4037-b09b-753fb78eadd2.png)
+* Registration Request format
+
+![image](https://user-images.githubusercontent.com/49769190/176366096-c00bd178-4a93-46d9-b2b0-e70ead2bc5ea.png)
+* Registration Reply format
+
+*  Homa agent address : Home Router에 설치된 Agent의 주소
+*  Identification : Registration Reply 메시지에 그대로 Copy되어 돌아오게 됨
+
+3. Phase 3. Data Transfer
+![image](https://user-images.githubusercontent.com/49769190/176366151-3e97e419-e0a5-4df5-a1a7-9e0fed3efd29.png)
+* 패킷을 실질적으로 전달하는 절차
+* Home Agent는 DB에 등록된 정보를 통해 MH가 홈 네트워크에 있는지, 외지 네트워크에 있는지를 판별함. 홈 네트워크에 있을 경우, 홈 네트워크로 곧장 보내고, 외지 네트워크에 있을 경우, IP Tunneling을 수행함.
+* 패킷이 Home Agent에서 Foreign Agent로 향할 때, IP 헤더가 추가적으로 붙게 됨 (IP in IP, IP Tunneling, 그림의 2번 과정)
+* IPv4에서 IP Tunneling은 Home Agent부터 Foreign Router에 있는 Foreign Agent까지 이어짐. Foreign Router는 도착한 패킷을 MH까지 Relaying함.
+* 구조적으로, Remote 호스트는 모바일 호스트에 직접 패킷을 송신할 수 없다. (성능 저하의 주요한 원인이나, 다른 인터넷의 노드들이 가변하는 MH의 주소를 몰라도 된다는 장점 )
+* 모바일 호스트는 Remote 호스트에 직접 패킷을 송신할 있음.
+
+#### Agent Advertisement Format
+![image](https://user-images.githubusercontent.com/49769190/176366240-38b77596-0a68-489b-be10-96c884f44cd4.png)
+
+
+#### Ineffciency in Moblie IP
+1. Double Crossing
+![image](https://user-images.githubusercontent.com/49769190/176366268-04028402-2a4d-498b-832f-6b90a7b3a493.png)
+* Mobile Host와 Remote Host가 같은 Foreign Network에 위치하는 경우 (Worst Case)
+* 같은 네트워크에 위치함에도 불구하고, Home Agent를 거쳐 패킷을 송수신
+* 네트워크에 위치함에도 불구하고, Home Agent를 거쳐 패킷을 송수신함.
+* 갔던 길을 그대로 되돌아 온다는 점에서 Double Crossing이라는 이름으로 불림.
+
+2. Triangle Routing (삼각 라우팅)
+
+![image](https://user-images.githubusercontent.com/49769190/176366315-c4a2fae2-d657-4742-b84e-69eadecd529e.png)
+* Remote Host와 Mobile Host가 서로 다른 Foreign Network에 위치한 경우 (가장 일반적인 경우)
+* Remote Host가 그림의 Could-be path와 같이 최단 송신 경로가 있음에도 불구하고 Home Agent를 거쳐서 송신
+
+       solution
+       - 삼각 라우팅을 최소화하는 방법이다.
+       - Home Router가 RH에게 MH의 위치를 지속적으로 알리는(Update) 방식이다.
+       - MH의 위치를 모르는 Remote Host(RH)는 어쩔 수 없이 처음 메시지를 보낼 때에는 Home Agent에게 송신하게 된다. (통신 초반에는 불가피한 Triangle Routing)
+       - MH에게 메시지를 보내고자 하는 RH의 존재를 알게 된 Home Agent는 MH의 위치를 알리는 Update 메시지를 RH에게 보내어 RH가 MH에게 직접 메시지를 보낼 수 있게 한다.
+       - MH가 다른 Foreign Network로 이동하게 될 경우, 이동하기 전 네트워크의 Foreign Agent가 Home Agent에게 MH가 이동함을 알리고, Home Agent는 RH에게 이를 알려 다시금 RH가 MH에게 직접 메시지를 보낼 수 있게 Update 메시지를 새로 보낸다.
+
+
+
+### ARP Protocol
+![image](https://user-images.githubusercontent.com/49769190/176366350-95dfb6df-e3e9-489a-926b-465b692657e1.png)
+
+
+* Address Resolution Protocol(ARP)
+* IP 주소(L3 주소, 논리주소)를 받아 link주소(L2 주소, 물리주소)를 알아내는 프로토콜임
+* 호스트나 라우터로 패킷을 전달하기 위해서, 해당 패킷에 논리 주소와 물리 주소가 모두 저장되어 있어야 함
+* 논리 주소를 물리 주소로 물리 주소를 논리 주소로 변환하는 작업이 필요
+* ARP는 Dynamic Mapping을 수행하기 위한 프로토콜임
+
+ #### 논리 주소 (Logical Address)
+  * s/w 구현된 주소, 전세계의 네트워크에서 한 호스트의 논리 주소는 유일함
+  * TCP/IP 프로토콜에서의 논리 주소를 IP address라 함
+  
+
+ #### 물리 주소 (Physical Address)
+  * H/W 구현된 주소, 물리 주소는 해당 Local Network내에서만 유효한 Local Address임
+  * 물리 주소 중 하나로, 이더넷이나 Token Ring에서의 48bit MAC Address 있음
+  
+  
+  #### Static Mapping(정적 변환)
+  * 정적 변환 방법에서는 논리 주소와 물리 주소가 Mapping되어 있는 Table을 이용하여 변환 / 이러한 Table은 Network Device들에 저장되어 있음
+
+※ Restrictions
+- Network Device의 NIC(Network Interface Card)를 교체하여 새 물리 주소가 생기는 경우
+- LocalTalk과 같은 LAN에서와 같이 컴퓨터가 부팅될 때 마다 물리 주소가 변경되는 경우
+- Mobile 컴퓨터와 같이 네트워크를 이동하면서 물리 주소가 계속 변경되는 경우
+- 위와 같은 한계에 대응하여, Table을 주기적으로 Update해야하는데,
+  이러한 Update는 네트워크에 매우 큰 Overhead로 작용하게 된다.
+  
+ #### Dynamic Mapping(동적 변환)
+ * 한 호스트가 다른 Device의 논리 주소만 알고 있는 경우, 해당 논리 주소를 통해 물리 주소를 알아내는 방식임
+ * ARP는 논리 주소를 물리 주소로 Dynamic Mapping하는 프로토콜이고, RARP는 물리 주소를 논리 주소로 Dynamic Mapping하는 프로토콜
+ * 현재 RARP는 DHCP로 대치되어 사용되지 않는 추세
+
+        ARP가 필요한 경우
+          - Case 1. 한 호스트가 같은 Physical Network상의 다른 호스트에게 메시지를 전송하고자 하는 경우
+              * 두 호스트는 같은 물리 네트워크상에 있기 때문에 Receiver Host의 논리주소는 이미 알고 있는 상태
+              * 즉, Receiver의 물리 주소만 상황이므로, ARP 프로토콜을 사용해야 함
+             
+![image](https://user-images.githubusercontent.com/49769190/176366401-2f156d36-7bad-4f3a-9042-06786fbf98f7.png)
+
+
+        - Case 2. 한 호스트가 다른 Physical Network상의 호스트에게 메시지를 전송하고자 하는 경우
+            * Sender는 자신의 Routing Table(Static Routing Table)을 참조하여 인접한 Router로의 NHA 주소(=인접한 라우터의 논리 주소)를 알아내어 이를 ARP를 통해 물리 주소로 변환
+            * Sender에게 Routing Table이 없다면, Default Router의 논리 주소를 ARP를 이용하여 물리 주소로 변환
+            * 즉, Case 2에서는 인접한 Router의 논리 주소가 ARP를 통해 물리 주소로 변환됨
+
+![image](https://user-images.githubusercontent.com/49769190/176366441-252dcd22-1ea8-4de6-80e5-04ea54880df9.png)
+
+        - Case 3. 한 Router가 다른 Router에게로 메시지를 전송하는 경우
+              * 즉, 메시지가 네트워크 상의 중간경로에 위치한 경우
+              * 이러한 경우, Sender Router는 Routing Table(Dynamic Routing Table)을 참고하여 Receiver Router로의 NHA(=Receiver Router의 논리 주소)를 알아내고, 이 NHA를 ARP를 이용하여 물리 주소로 변환
+  
+![image](https://user-images.githubusercontent.com/49769190/176366464-4bf80118-81c8-489d-9ea9-3bac2a4a5feb.png)
+
+      
+  
+        - Case 4. 한 Router가 자신의 관활내에 있는 호스트에게로 메시지를 송신할 경우
+              * 메시지가 다수의 물리 네트워크를 거쳐 Receiver에게로 도착하는 경우
+              * 이 경우, Receiver의 논리 주소가 ARP를 통해 물리 주소로 변환
+
+![image](https://user-images.githubusercontent.com/49769190/176366498-a1c7cfc2-7008-4545-acd3-671ce6f96a8e.png)
+
+
+### ARP Operation
+* ARP Protocol에서는 Sender측에서 Receiver측의 MAC 주소를 알기위해 행하는 ARP Request와 Receiver측에서 Sender측에게 요청한 MAC 주소를 알려주는 ARP Reply를 정의
+
+### ARP request
+* Receiver의 IP는 알고 있으나, Link 주소는 모르기 때문에(애초에 Link주소를 구하는 과정이다) / Question Symbol('?')로 패킷을 채움(사실, Question Symbol은 32Bit Field가 모두 0으로 채워서 표현)
+* Link 주소를 모르기 때문에, Broadcast 방식(모든 Host에게 신호를 전송)으로 신호를 전송
+* ARP Cahce*를 통해 ARP Request 과정이 생략
+
+      ARP Cache
+       - 기존에 통신했던 Host의 Link 주소를 저장하는 메모리
+       - ARP 캐쉬에는 값을 저장하는 데에 유효시간이 존재하기 때문에 시간이 만료되면 다시 ARP Request 과정을 행해야 함.
+
+      ARP Reply
+       - ARP Reply는 ARP Request와 달리, Unicast(목적지 Host에게만 신호를 전송)방식으로 신호를 전송
+       - Receiver는 Sender의 네트워크 주소와 물리주소 모두를 알고 있기 때문 (굳이 Broadcasting하여 Network에 부담을 줄 필요가 없음)
+*** 
+Example. A가 B와의 통신을 위해 ARP Request를 수행하는 예시
+![image](https://user-images.githubusercontent.com/49769190/176366539-7bab1e03-c320-477d-b448-ef20580bdce9.png)
+* System A는 System B의 Link Address를 모르기 때문에, 같은 Physical Network 상에 있는 모든 Host가 수신할 수 있도록 ARP Request를 Broadcasting
+* 위 그림에서 검은색 실선은 Physical Path이고, 하늘색 실선은 Logical Path
+* Ni는 i번째 시스템의 네트워크 주소(IP주소)를 의미하고, Li는 i번째 시스템의 링크 주소를 의미
+
+
+### ARP Packet
+![image](https://user-images.githubusercontent.com/49769190/176366584-fda04ae4-3664-493e-94b8-73b2edca0167.png)
+
+
+ * Hardware Type (16Bit)
+    * ARP가 수행되고 있는 네트워크의 유형을 정의하는 필드
+    * 예를 들어, Ethernet의 경우, H/W Type 값은 1임
+    * ARP는 어떠한 Physical Network에서도 사용될 수 있음
+
+ * Protocol Type (16Bit)
+    * 프로토콜을 정의하는 필드
+    * 예를 들어, IPv4의 Protocol Type은 0x0800
+    * ARP는 어떠한 상위 Layer Protocol과도 호환이 가능
+
+ * Hardware Length (8Bit)
+   * 물리 주소의 길이를 바이트 단위로 정의하여 저장하는 필드
+   * 예를 들어, Dotted-Decimal 주소 체계(6Byte)를 사용하는 Ethernet의 경우, H/W Length값은 6임
+
+ * Protocol Length (8Bit)
+   * 논리 주소의 길이를 바이트 단위로 정의하여 저장하는 필드
+   * 예를 들어, IPv4의 Protocol Length는 4
+
+ * Operation (16Bit)
+   * ARP Request Packet의 경우, Operation 필드에는 1이 저장되고, ARP Reply Packet의 경우, Operation 필드에는 2가 저장
+
+ * Source Hardware Address (Variable Length)
+   * 송신자의 물리 주소가 저장되는 가변길이 필드
+   * 예를 들어, Ethernet에서 이 필드는 6Byte
+
+ * Source Protocol Address (Variable Length)
+   * 송신자의 논리 주소가 저장되는 가변길이 필드
+   * 예를 들어, IPv4 주소를 사용하는 경우, 이 필드는 4Byte
+
+ * Destination Hardware Adderss (Variable Length)
+   * 수신자의 물리 주소가 저장되는 필드이지만, ARP는 이 수신자의 물리 주소를 알아내는 프로토콜이므로, ARP Request Packet의 경우, 이 필드는 모두 0으로 채워짐.
+   * Source H/W Address와 마찬가지로, Ethernet에서 이 필드는 6Byte
+
+ * Destination Protocol Address (Variable Length)
+   * 수신자의 논리 주소가 저장되는 가변길이 필드
+   * 예를 들어, 수신자의 주소가 IPv4 주소인 경우, 이 필드는 4Byte
+
+
+
 
 ### 참고🛹 
 * https://seungyooon.tistory.com/187
 * https://velog.io/@hidaehyunlee/IP-address%EB%9E%80
 * https://limkydev.tistory.com/168
+* https://velog.io/@anjaekk/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EB%A9%80%ED%8B%B0%EC%BA%90%EC%8A%A4%ED%8C%85
