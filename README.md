@@ -691,8 +691,9 @@ Example. A가 B와의 통신을 위해 ARP Request를 수행하는 예시
 
 
 
-### 참고🛹 
+### 🍋참고🍋
 * https://seungyooon.tistory.com/187
 * https://velog.io/@hidaehyunlee/IP-address%EB%9E%80
 * https://limkydev.tistory.com/168
 * https://velog.io/@anjaekk/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EB%A9%80%ED%8B%B0%EC%BA%90%EC%8A%A4%ED%8C%85
+* https://florescene.tistory.com/m/category/Computer%20Science/%EC%BB%B4%ED%93%A8%ED%84%B0%20%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC
