@@ -690,6 +690,236 @@ Example. A가 B와의 통신을 위해 ARP Request를 수행하는 예시
 
 
 
+## Unicast Routing Protocol🍅🍅
+
+  * Unicast Communication상에서 최적의 비용을 갖는 통신 경로를 찾아내는 프로토콜
+  * 라우터들은 라우팅 프로토콜을 이용하여 인터넷의 수정사항을 서로에게 알려 최적의 통신 경로를 갱신해나감.
+
+
+https://boostnote.io/api/teams/KyrG5EEUe/files/33fb51c36c9f1da1381b3226e79fd43b033fcb4339288d6808a54953497cf346-image.png![image](https://user-images.githubusercontent.com/49769190/176881369-f2a8899d-14de-442b-bf1b-d31f764942c0.png)
+
+  
+        유니캐스트 통신: 하나의 sender와 하나의 receiver간의 통신을 의미, one-to-one 통신이라고 함.
+        
+* 인터넷은 AS(Autonomous System)의 관리 단위로, 자율 시스템은 단일 관리 기관 하에 있는 라우터와 네트워크 그룹을 의미
+* 대규모의 인터넷을 AS로 나누어 divide and conquer 방식으로 다루기 위한 개념
+* 각각의 AS끼리는 서로의 네트워크 구조를 공유하며, 외부의 네트워크 상황을 알게됨.
+
+### Static Routing Table - Dynamic Routing Table(정적 라우팅 테이블 - 동적 라우팅 테이블)
+
+  1. 정적 라우팅 테이블
+    * 호스트가 갖고 있는 라우팅 테이블을 의미
+    * ICMP Redirection 메시지를 받지 않는 한 거의 변하지 않음
+    * 네트워크 변경 사항이 즉각 갱신되지 않고 테이블 크기가 크지 않음
+
+   2. 동적 라우팅 테이블
+    * 주로 라우터가 갖고 있는 라우팅 테이블
+    * 네트워크의 변경 사항이 즉각 갱신, 테이블의 크기가 큰 편에 속함.
+
+
+### Intradomain - interdonmain(도메인 내 라우팅 - 도메인 간 라우팅)
+https://boostnote.io/api/teams/KyrG5EEUe/files/a8a97db21d668a0c901d9992571843e40c3c0b99869f1b6cd4c52be211b06580-image.png![image](https://user-images.githubusercontent.com/49769190/176881404-4774b3cb-2143-45a9-b7e4-0d8d60acdb5b.png)
+
+
+1. Intradomain(도메인 내 라우팅)
+* 자율 시스템 내에서의 라우팅
+* 각 자율 시스템은 하나 이상의 intradomain 라우팅 프로토콜을 사용
+* distance vector routing 알고리즘 기반의 RIP 라우팅 프로토콜
+* Link state routing 알고리즘 기반의 OSPF 라우팅 프로토콜
+
+2. Interdomain(도메인 간 라우팅)
+* 자율 시스템 간의 라우팅
+* 자율 시스템 간 라우팅을 처리하기 위해 interdomain 라우팅 프로토콜 사용
+* path vector routing 기반의 BGP 라우팅 프로토콜
+
+### Bellman-Ford Aigorithm(벨만 포트 알고리즘)
+* 그래프 상, 임의의 노드 간의 최단거리 경로를 찾아내는 알고리즘
+* 거리 벡터 라우팅 알고리즘의 기초가 되는 알고리즘
+https://boostnote.io/api/teams/KyrG5EEUe/files/59e2b1b5ee82c77b7286285fbb372548ac61265baab9c0c0cfd13ddc21a9cb5d-image.png![image](https://user-images.githubusercontent.com/49769190/176881595-8bfe7a69-11dd-455e-8754-4d3af57cae9e.png)
+
+https://boostnote.io/api/teams/KyrG5EEUe/files/2803f00b465ee136eb78745917e98cbf897d60280fb703a17f54bb2873495e8d-image.png![image](https://user-images.githubusercontent.com/49769190/176881656-4901fac0-f4bf-4145-85ff-32aaf3a53967.png)
+
+
+
+### RIP (Routing Information Protocol)
+* Distance Vector Routing Algorithm 기반의 라우팅 프로토콜이다.
+* Intra Domain(Interior) 라우팅 프로토콜 중 하나이다.
+* 고안된지 오래된 라우팅 프로토콜로, 오늘날 널리 쓰이는 Intra Domain 라우팅 프로토콜로는 OSPF가 있다.
+* RIP은 UDP의 Well-Known Port 520에서 제공하는 서비스(즉, RIP 요청/업데이트 메시지는 User-Datagram 이다.)
+
+<img width="771" alt="image" src="https://user-images.githubusercontent.com/49769190/176881985-b2f15ab3-b6dd-4d21-ade0-c5745f8dd11b.png">
+
+
+### RIP Message Format
+
+<img width="816" alt="image" src="https://user-images.githubusercontent.com/49769190/176882178-87e109b2-e2a9-4036-aa7b-e04a894a8385.png">
+* RIP 프로토콜 하에서, 라우터들끼리 라우팅 정보를 주고받을 때 사용하는 메시지의 형식이다.
+* Command : Request(요청)일 경우 1, Update(응답)일 경우 2로 설정된다. 응답메시지가 라우팅 정보를 담고있는 것이 일반적이다.
+* Version : 본 포스트에서 설명하는 RIP의 버전은 1이다.
+* Repeated 되는 필드(회색부분)에 Destination과 Cost에 해당되는 정보들이 입력된다.
+* Family : TCP/IP의 경우, Family 값은 2로 고정된다.
+* Network Address : Destination 정보에 해당된다.
+* Distance : Cost 정보에 해당된다.
+
+### RIP Request Message
+<img width="817" alt="image" src="https://user-images.githubusercontent.com/49769190/176882351-4b6569e2-e78a-4991-bcb2-7feadb2ffe19.png">
+* RIP 요청 메시지의 경우, Command 값이 1로 설정된다.
+* RIP 요청 메시지의 경우, 아래와 같이 두 가지 형태로 존재하게 된다.
+
+1. Request for some
+* 지정한 네트워크에 대한 Cost를 요청하는 형태이다.
+* Network Address에 알고자하는 네트워크의 주소를 입력하여 전송
+* 다수의 네트워크에 대한 Cost를 알고자 하는 경우, 요청 메시지를 Repeat(반복; 연장)하여 전송한다.
+
+2. Request for all
+* 요청 메시지를 받게될 라우터가 알고있는 모든 라우팅 정보를 보내줄 것을 요청하는 형태이다.
+* Network Address에 0.0.0.0(All 0s)을 입력하여 전송한다.
+* 요청 메시지를 반복(연장)할 필요가 없다.
+
+* RIP은 UDP에서 제공되는 서비스이므로, RIP 요청/업데이트 메시지는 User-Datagram임.
+
+
+### Link State Routing Algorithm (링크 상태 라우팅 알고리즘)
+<img width="510" alt="image" src="https://user-images.githubusercontent.com/49769190/176882741-7fc8f395-3d11-4699-9766-d4c143b38e76.png">
+- OSPF 프로토콜은 링크 상태 라우팅 알고리즘을 기반으로 한 대표적인 알고리즘
+- Link State란, 라우터 자신에게 연결된 Edge 정보(특정 노드와의 연결 여부와 Cost 등)를 의미한다.
+- 링크 상태 라우팅 알고리즘은, 각 라우터들이 자신의 LSP(Link State Packet)*를 Flooding(플러딩)**하는 방식으로 동작한다.
+- 결과적으로, 모든 라우터들이 Link State(Edge 정보)를 다 알게 되며, 모두가 Complete Network Topology를 파악한 상태가 된다.
+- 각각의 라우터들은 LSP를 인접한 노드에게 주기적으로 전송하며, Link의 변화가 감지되면 그 즉시 LSP를 인접한 노드에게 전송하는 식으로 Update한다.
+- 각각의 라우터 혹은 물리 네트워크 노드에서는 Shortest Path Algorithm을 이용하여 특정 노드로의 최단 경로를 계산한다. (대표적으로 Dijkstra Algorithm을 이용한다.) 
+
+* LSP (Link State Packet; 링크 상태 패킷)
+- 라우터 자신의 Link State를 저장한 패킷이다.
+
+** Flooding(플러딩)
+- 다른 라우터들에게 효과적이며 안전한 방법으로 LSP(Link State Packet)를 전송하는 방법이다.
+- 인접한 라우터에 LSP를 전달하고, 이를 수신한 라우터가 다른 라우터에게도 전송하는 방식이다.
+
+※ 실제 링크 상태 라우팅 알고리즘에서 노드는 라우터와 네트워크로 구성된다. (라우터만이 노드가 아니다.) 위 그림은 각 Link(Edge)마다 존재하는 하나 이상의 Network 노드가 생략된 형태이다.
+
+
+
+### Link State Routing Algorithm의 수행과정 (4-Phase)
+1. 모든 라우터들의 LSP의 생성
+
+2. Flooding Dissemination of LSP to every other nodes
+- 플러딩을 통한 모든 노드로의 LSP 보급
+
+3. Dijkstra's Algorithm Formation of shortest path tree
+
+4. Calculation of routing table
+
+### OSPF (Open Shortest Path First)
+<img width="817" alt="image" src="https://user-images.githubusercontent.com/49769190/176883101-172c5080-905d-4534-bdf9-15639fb85399.png">
+1. Area
+- AS내에 포함되는 호스트, 라우터, 네트워크의 집합이다.
+
+2. Backbone Area
+- 모든 Area들의 기본이 되는 Area를 의미한다.
+
+3. Area Border Router
+- 각 Area를 상호 연결하는 라우터이다.
+- 양쪽 Area에 서로의 네트워크 정보에 대한 Summary를 공유하게 한다.
+
+4. AS Boundary Router
+- 각 AS를 상호 연결하는 라우터로, Backbone Area에 위치한다.
+
+
+- 각 라우터들은 자신이 속한 Area의 Complete Network Topology를 바탕으로 라우팅 테이블을 생성한다.
+- 즉, Area내에 위치하는 라우터들은 자신이 속한 Area의 Complete Topology를 알게 되고, 외부 Area의 Topology Summary를 알게 된다.
+- Link State Routing Algorithm에 기반한 프로토콜이다.
+- 각 라우터들이 링크 정보를 주고받음으로써, 네트워크 전체에 대한 Topology를 알게 되고, 전체 네트워크에 대한 최단경로를 주로 다익스트라 알고리즘을 통해 계산한다.
+- Intra Domain(Interior) 라우팅 프로토콜 중 하나이다.
+- RIP 프로토콜의 단점*을 개선했다.
+
+* RIP은 대규모 네트워크에 적용할 수 없고, 하나의 Metric, 하나의 패킷 전송 경로만 생성할 수 있다는 단점이 있다. (자세한 내용은 본 블로그의 포스트 참조)
+
+
+
+### OSPF Packet (OSPF 패킷)
+<img width="817" alt="image" src="https://user-images.githubusercontent.com/49769190/176883455-58d42ebd-066d-4462-80f7-538ef1d54ad7.png">
+- OSPF 패킷은 IP-Datagram(L3) 패킷 위에서 Encapsulation된다.
+- OSPF 패킷은 크게 다섯 가지 종류로 구분된다.
+
+1. Hello Packet
+- 라우터가 Power-On되었을 때, 주변 라우터에게 보내는 메시지이다.
+
+2. Database Description Packet (DB Description Packet)
+- Hello 패킷을 수신한 라우터가 보내는 메시지이다.
+- 라우팅 테이블에 대한 윤곽(개요)을 전송한다. (라우팅 테이블 전체를 전송하는 것이 아니다.)
+
+3. Link State Request Packet
+- DB Description 패킷을 수신한 후에도 추가적인 정보를 원할 때 보내는 요청 메시지이다.
+
+4. Link State Update Packet
+- Link State 요청 메시지를 수신한 라우터가 보내는 메시지이다.
+- 5가지 종류의 링크*로 구성된다.
+
+5. Link State Acknowledgment (Link State ACK)
+- Link State Update 패킷에 대한 ACK 메시지이다.
+
+### Path Vector Routing Algorithm (경로 벡터 라우팅 알고리즘)
+<img width="633" alt="image" src="https://user-images.githubusercontent.com/49769190/176883794-4de38337-76e7-4db8-b633-92dbe90c2ab4.png">
+- AS1~AS3의 각각의 Exterior 라우터(대표 라우터; R1~R3)들 간에 사용되는 라우팅 프로토콜이 Interdomain 라우팅 프로토콜이다.
+- 각 Exterior 라우터는 자신의 Reachability(도달 가능성)를 다른 Exterior 라우터에게 알린다.
+- Intradomain에서는 송신 경로를 NHA로써 표현하고, Interdomain에서는 송신 경로를 Path*로써 표현한다.
+
+* Path : AS들의 Collection이다.
+
+<img width="629" alt="image" src="https://user-images.githubusercontent.com/49769190/176883891-f3c380e2-3eba-4b40-9864-85b44e9571a2.png">
+* 각 Exterior 라우터들의 라우팅 테이블을 표현한 
+
+<img width="718" alt="image" src="https://user-images.githubusercontent.com/49769190/176883942-f430f2ac-81d1-4997-8397-233370124927.png">
+* 위 그림은 Address Aggregation을 통해 간소화 한 라우팅 테이블을 표현한 것이다..
+* 3가지의 경로들을 하나의 엔트리로 나타내기 위해 수퍼네팅을 수행한다.
+* 경로가 3가지이므로, 2bit를 필요로 한다. 따라서 Net-Id가 2bit 줄어들게 된다.
+
+* Path Vector 라우팅 알고리즘을 통한 Anycast 구현 방식
+  * Anycast : 1 to Any Communication 형태로, 중복된 목적지 중 가장 최적의 경로로 연결하는 통신 형태이다. 
+  * 다수의 목적지로부터 Source에게 Path가 전송되고, Source는 수신한 Path 중 거치는 Exterior 라우터의 수가 가장 적은 Path를 택하게 된다.
+
+### BGP (Border Gateway Protocol)
+
+- 1989년에 처음 도입되어 4번의 버전이 갱신되었다.
+- 가장 많이 쓰이는 Interdomain 라우팅 프로토콜이다.
+- BGP는 TCP의 Well-Known Port 179에서 제공하는 서비스이다.(즉, BGP 메시지는 Segment)
+
+<img width="721" alt="image" src="https://user-images.githubusercontent.com/49769190/176884141-5b106b49-53c0-4944-a880-4f243d8b557a.png">
+1. External BGP Session (E-BGP Session)
+* 각 AS의 Exterior 라우터들이 서로 연결되는 절차이다.
+* 각 Exterior 라우터들은 서로의 Reachability를 공유하게 된다.
+
+2. Internal BGP Session (I-BGP Session)
+* 각 AS의 Exterior 라우터(A1, B1)들은 자신의 AS의 Reachability를 파악하기 위한 절차이다.
+
+### BGP Message🍎
+<img width="589" alt="image" src="https://user-images.githubusercontent.com/49769190/176884320-05957bdc-e7d3-47c0-a1a6-25f78ab6f108.png">
+* BGP 메시지의 Common Header(공통 헤더)의 형태임.
+* Type 필드를 통해 아래 BGP 메시지 형태를 구분
+
+<img width="768" alt="image" src="https://user-images.githubusercontent.com/49769190/176884397-548086f7-171c-4b0e-a06c-024714ada280.png">
+1. Open Message
+<img width="538" alt="image" src="https://user-images.githubusercontent.com/49769190/176884544-1963b258-48d4-47cc-ac77-93eb8361dff6.png">
+* Exterior 라우터가 Power-on되고, 이웃의 Exterior와 E-BGP Session을 생성하기 위해 송신하는 메시지이다.
+
+2. Update Message
+<img width="653" alt="image" src="https://user-images.githubusercontent.com/49769190/176884586-77f751e6-a635-4009-9a6f-c555a999919f.png">
+* Path Vector에 대한 정보를 담은 메시지이다.
+* Withdrawn Routes : 무효화 된 경로를 의미한다. (다수의 네트워크가 저장될 수 있다.)
+* Path Attributes :  Path Vector를 의미한다.
+* Network Layer Reachability Information : 액세스 가능한 네트워크 주소를 의미한다.
+
+* 즉, Path Attributes와 Network Layer Reachability Information가 Key 역할이다.
+
+3. Keep-alive Message
+<img width="628" alt="image" src="https://user-images.githubusercontent.com/49769190/176884664-27c56c3b-4232-4151-8b77-5d43722aa091.png">
+* Open 메시지에 대한 ACK 메시지이다. (헤더만 존재한다.)
+* 각 AS의 Exterior 라우터들은 서로 주기적으로 Keep-alive 메시지를 주고 받으며, 연결 여부를 지속적으로 파악한다.
+
+4. Notification Message
+<img width="619" alt="image" src="https://user-images.githubusercontent.com/49769190/176884776-f1ddddb7-4c54-499c-955a-1dd188776586.png">
+* 오류가 발생했을 때, 오류에 관한 내용을 송신하는 메시지
+
 
 ### 🍋참고🍋
 * https://seungyooon.tistory.com/187
