@@ -695,8 +695,7 @@ Example. A가 B와의 통신을 위해 ARP Request를 수행하는 예시
   * Unicast Communication상에서 최적의 비용을 갖는 통신 경로를 찾아내는 프로토콜
   * 라우터들은 라우팅 프로토콜을 이용하여 인터넷의 수정사항을 서로에게 알려 최적의 통신 경로를 갱신해나감.
 
-
-https://boostnote.io/api/teams/KyrG5EEUe/files/33fb51c36c9f1da1381b3226e79fd43b033fcb4339288d6808a54953497cf346-image.png![image](https://user-images.githubusercontent.com/49769190/176881369-f2a8899d-14de-442b-bf1b-d31f764942c0.png)
+![image](https://user-images.githubusercontent.com/49769190/176885164-839410a0-732f-4532-a5e3-8a9914410650.png)
 
   
         유니캐스트 통신: 하나의 sender와 하나의 receiver간의 통신을 의미, one-to-one 통신이라고 함.
@@ -718,7 +717,7 @@ https://boostnote.io/api/teams/KyrG5EEUe/files/33fb51c36c9f1da1381b3226e79fd43b0
 
 
 ### Intradomain - interdonmain(도메인 내 라우팅 - 도메인 간 라우팅)
-https://boostnote.io/api/teams/KyrG5EEUe/files/a8a97db21d668a0c901d9992571843e40c3c0b99869f1b6cd4c52be211b06580-image.png![image](https://user-images.githubusercontent.com/49769190/176881404-4774b3cb-2143-45a9-b7e4-0d8d60acdb5b.png)
+![image](https://user-images.githubusercontent.com/49769190/176885232-fe7e3bc2-dad5-4d72-9a69-9569fed1f32b.png)
 
 
 1. Intradomain(도메인 내 라우팅)
@@ -735,10 +734,11 @@ https://boostnote.io/api/teams/KyrG5EEUe/files/a8a97db21d668a0c901d9992571843e40
 ### Bellman-Ford Aigorithm(벨만 포트 알고리즘)
 * 그래프 상, 임의의 노드 간의 최단거리 경로를 찾아내는 알고리즘
 * 거리 벡터 라우팅 알고리즘의 기초가 되는 알고리즘
-https://boostnote.io/api/teams/KyrG5EEUe/files/59e2b1b5ee82c77b7286285fbb372548ac61265baab9c0c0cfd13ddc21a9cb5d-image.png![image](https://user-images.githubusercontent.com/49769190/176881595-8bfe7a69-11dd-455e-8754-4d3af57cae9e.png)
 
-https://boostnote.io/api/teams/KyrG5EEUe/files/2803f00b465ee136eb78745917e98cbf897d60280fb703a17f54bb2873495e8d-image.png![image](https://user-images.githubusercontent.com/49769190/176881656-4901fac0-f4bf-4145-85ff-32aaf3a53967.png)
 
+![image](https://user-images.githubusercontent.com/49769190/176885273-e4feeb6a-7d6f-4705-bf14-a479350bdc4c.png)
+
+![image](https://user-images.githubusercontent.com/49769190/176885342-f907c799-14a0-4026-8fa7-703c55feac47.png)
 
 
 ### RIP (Routing Information Protocol)
