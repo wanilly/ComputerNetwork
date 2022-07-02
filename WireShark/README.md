@@ -14,6 +14,8 @@
   
   장치에 대한 권한을 664 읽기권한을 변경하여 wireshark(프로그램) 재실행
 <img width="682" alt="image" src="https://user-images.githubusercontent.com/49769190/175287310-766d8ac6-2317-4b04-b92c-d5c334acbf11.png">
+<img width="682" alt="image" src="https://user-images.githubusercontent.com/49769190/176986912-08d6e3f0-30ff-4efd-9046-0ed318d8ee36.png">
+
 
 정상적으로 패킷을 받는 것을 확인할 수가 있다.
 <img width="1201" alt="image" src="https://user-images.githubusercontent.com/49769190/175287771-d65afc91-9f7b-4764-9442-beb3d6828e1f.png">
