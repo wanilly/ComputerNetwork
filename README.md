@@ -921,6 +921,237 @@ Example. A가 B와의 통신을 위해 ARP Request를 수행하는 예시
 * 오류가 발생했을 때, 오류에 관한 내용을 송신하는 메시지
 
 
+### UDP(User Datagram Protocol)
+
+      UDP는 손실 발생, 순서 보장하지 않는 단점이 있는데 왜 UDP를 사용하는지 의문이 들 수 있다. UDP는 연결을 하지 않기 때문에 연결에서 발생하는 지연이 없으며, 간단하며, 작은 세그먼트 헤더를 갖는다 -> 주로 멀티미디어 애플리케이션을 스트리밍 하는 경우에 사용된다. 손실이 발생해도 크게 상관이 없으며, 혼잡 제어, 복구 등이 없어 빠른 장점
+* 구조가 가장 간단함.
+* 비연결 서비스제공
+* 헤더오 전송 데이터에 대한 체크섬 기능 제공
+
+
+    32bits 길이를 가진다. 헤더에는 4개의 필드만이 존재하는데, 각각 16bit씩 가진다.
+    
+1. Source / Destination Port
+* 송수신 프로세스의 할당된 네트워크 포트 번호
+ 
+2.Length
+* 프로토콜 헤더를 포함한 UDP 데이터그램의 전체 크기
+ 
+3. Checksum
+* 오류 검출
+
+<img width="810" alt="image" src="https://user-images.githubusercontent.com/49769190/177028002-ef24237f-5439-4a3b-a3ef-30485348a404.png">
+
+
+### TCP(Transmission Control Protocol)
+<img width="653" alt="image" src="https://user-images.githubusercontent.com/49769190/177028949-500a04e1-e901-4890-ac3d-2dba5c6e5086.png">
+* TCP는 애플리케이션 계층과 네트워크 계층 사이에 있으며 애플리케이션 프로그램과 네트워크 운영 사이의 중개자 역할을 함.
+* 인터넷 통신에 있어서 중요한 역할함.
+
+#### IP 주소와 포트번호
+* IP주소는 source to destination을 위해 필요한 주소이며 Network Layer의 IP 헤더에 들어감.
+* Port번호는 시스템이 1024번 이후 번호로 임의 지정해 주는 주소이며 Transport Layer에서 관여함.
+
+#### Stream Delivery
+<img width="698" alt="image" src="https://user-images.githubusercontent.com/49769190/177029223-47209664-6601-4756-b012-1738bdfe5ffc.png">
+* byte 연속으로 데이터 전달
+* Application에서 생성한 boundary 유지되는 경우 -> UDP의 데이터 전송 방식임.
+
+* TCP의 경우, 비서는 강 사장이 전달한 사탕의 포장을 분해한 뒤 본인이 임의대로 재포장해 상대에게 보냄 -> boundary가 무너진 것임, TCP에서는 데이터가 바이트의 연속(낱개)으로 전송되며 이를 stream delivery 방식임.
+
+#### Sending and Recieving Buffers
+<img width="698" alt="image" src="https://user-images.githubusercontent.com/49769190/177029212-f34ad680-8c04-4a78-9a05-2f2d8fb8885f.png">
+* TCP는 양방향으로 데이터를 전송
+* 송신 버퍼의 Sent는 이미 보낸 data이며 상대방이 해당 데이터를 정상적으로 수신하지 못했을 때 재전송 할 목적으로 보관하고 있는, data의 copy본들이 저장되어 있다. 
+* Not sent는 applicartion에게 받아 아직 보내지 않은 데이터이며 아무런 표시가 되어 있지 않은 empty 부분은 applicartion에게 받을 데이터를 보관할 빈 공간이다. 
+* 수신 버퍼의 Not read에는 아직 읽지 않은 수신데이터가 보관되어 있다. 
+* 버퍼에서는 누락된 데이터를 제외하고 제대로 도착한 데이터만 위로 올려보내준다. 
+* 누락된 건은 상대방 Transport Layer와 Process - to - process로 연락을 주고 받아 재전송 받고, 데이터의 신뢰성을 확인한 후 상위계층(application)으로 전송함.
+
+#### TCP Segments
+* TCP는 데이터를 패킷으로 만들어 상대방에게 보내주며, 해당 패킷은 Transport Layer에서 segment라 함.
+* 패킷 하나당 약 1024byte임
+* 전송되는 패킷의 크기가 결정됨
+
+#### Numbering System
+* TCP는 패킷 누락에 책임이 있으며 누락 확인을 위해 각 패킷마다 번호를 부여
+* 이 번호는 임의의 번호로 시작함.
+
+***
+Example) TCP 연결이 5,000바이트의 파일을 전송한다고 가정해 보자. 첫 번째 바이트는 10,001로 번호가 매겨졌다(랜덤). 데이터가 각각 1,000바이트를 운반하는 5개의 세그먼트로 전송될 경우 각 세그먼트의 시퀀스 번호는?
+* 패킷에 있는 data의 첫번째 byte = 그 패킷의 sequence number
+<img width="929" alt="image" src="https://user-images.githubusercontent.com/49769190/177029480-e37abbc2-d05d-4ab4-92b3-c8532411635e.png">
+
+ACK(Acknowledgment, 확인 응답) : 패킷을 받았을 때 응답
+<img width="648" alt="image" src="https://user-images.githubusercontent.com/49769190/177029525-dee7c7a3-8ff8-424b-8d5e-f2f3e6298957.png">
+
+1. Selective ACK
+* UDP 방식
+* 받은 데이터의 byte 번호
+
+2. Cumulative ACK
+* TCP 방식
+* 다음 번에 받고 싶은 데이터의 byte 번호
+
+
+#### Segments
+<img width="748" alt="image" src="https://user-images.githubusercontent.com/49769190/177029851-958541c2-700a-4bad-8278-c71539265bad.png">
+
+* TCP의 헤더 크기는 기본 20byte ~ 60byte이다.
+* 헤더의 크기가 유동적이기 때문에 헤더 안에 어디까지가 헤더이고 어디부터 data인지 표시
+
+1. HLEN
+* 4bits 
+* 헤더의 길이를 나타냄.
+* 4bits로는 1111(2) 즉, 10진수로 15까지 표현할 수 있는데, 헤더의 길이는 최대 60byte까지 나타날 수 있기 때문에 이진수로 60을 나타내려면 111100(2) 총 6bits가 필요
+* 따라서 4bits로 60을 나타내기 위해 해당 수에 ÷4를 한다
+
+***
+Example) HLEN = 60(10) = 111100(2)
+
+*  111100(2) ÷ 4 = 15(10) = 1111 ☞ 15로 60을 표현할 수 있다. 
+
+Example) HLEN = 20(10) = 10100(2)
+
+*  10100(2) ÷ 4 = 5(10) = 0101 ☞ 5로 20을 표현할 수 있음
+
+* 헤더의 길이가 20바이트라면 ÷4를 해서 5를 보내고, 60바이트라면 ÷4를 해서 15를 보낸다.
+* 받는 쪽에서는 ×4를 해서 헤더의 길이를 인식
+
+***
+
+#### Checksum
+* 16bits
+* 데이터의 오류 체크
+* 헤더의 모든 내용 16bits씩 끊어와서 다 더함
+
+#### Control Field
+<img width="944" alt="image" src="https://user-images.githubusercontent.com/49769190/177030028-7981aaf8-5a7e-4d47-8ae9-3e0ed2658f0c.png">
+
+* 각 필드는 각각 1bit.
+* ACK: 1-번호를 보내니 반드시 보라고 상대에게 알려줌 / 0-상대는 헤더의 acknowledgment number 필드(16bits)에 쓰인 데이터를 쓰레기 취급함 
+* SYN: 연결 요청 패킷
+* FIN: 종료 요청 패킷
+
+#### Pseudoheader added to the TCP segment
+<img width="913" alt="image" src="https://user-images.githubusercontent.com/49769190/177030076-b7c9d2f7-213d-43e3-96c5-5300b2c7b73c.png">
+* IP헤더로부터 Source IP주소, destination IP주소, 프로토콜 종류를 가져오고, TCP 헤더로부터 TCP 길이를 가져온다.
+* 확실한 체크 위해 해당 정보를 붙여서 checksum을 구한다.
+* 만약 checksum을 통해 비트오류를 발견한다면 해당 패킷을 통째로 버린다.(어떤 비트가 오류인지 모름)
+* 전송 시에는 슈도헤더를 떼고 헤더만 보냄.
+
+***
+Example) checksum calculation at the sender
+<img width="1043" alt="image" src="https://user-images.githubusercontent.com/49769190/177030164-4774280d-f6e1-4018-9a2e-821fd3b81c3c.png">
+* 32bits IP헤더의 데이터를 16bits씩 끊어와서 모두 더한 뒤에 보수를 취한 뒤 checksum field에 저장.
+* UDP의 checksum은 선택이지만 TCP의 checksum은 필수이다.
+
+#### TCP Encapsulation
+ <img width="606" alt="image" src="https://user-images.githubusercontent.com/49769190/177029776-78b8f7a2-324e-450a-a76e-b2d0d55108d9.png">
+ 
+ <img width="865" alt="image" src="https://user-images.githubusercontent.com/49769190/177030440-12f12423-97bb-49e7-aa20-89b29cd01127.png">
+
+
+### TCP Connection
+
+#### Connection establishment using three-way handshake
+<img width="813" alt="image" src="https://user-images.githubusercontent.com/49769190/177031281-f8c8e364-1a38-475c-8f40-f10ab2e4d9d5.png">
+* data 전송 전 연결 setup 과정.
+* 해당 과정이 끝나야 버퍼가 생성되고 data 전송이 가능하다.
+* 서버는 클라이언트보다 먼저 실행해서 클라이언트의 연결 요청을 대기하고 있어야 함.
+
+<순서>
+1. 클라이언트는 Control field의 SYN에 1을 셋팅해 연결요청 패킷임을 명시한 뒤 해당 패킷을 서버에게 보내 연결을 요청한다. (seq: 8000- 랜덤 번호. SYN 패킷이 잘 도착했는지 확인하는 역할)
+2. 서버는 ACK을 클라이언트에게 전송해 연결요청을 허가(SYN에 대한 응답)한다. 동시에 SYN을 클라이언트에게 보내 서버도 연결요청을 한다.(seq: 15000- 랜덤 번호 / ack: 8001- 8000번까지 패킷을 받았고 8001번을 보내달라는 응답)
+3. 클라이언트는 서버가 보낸 SYN에 ACK을 보내 응답한다. (ack: 15001- 15000번까지 패킷을 받았고 15001번을 보내달라는 응답)
+4. 연결 완료
+
+#### Data transfer
+<img width="574" alt="image" src="https://user-images.githubusercontent.com/49769190/177031340-f9bc47aa-3a6f-48a6-90a2-bcf5838b4c3c.png">
+* 연결이 끝나고 데이터를 주고 받는 과정
+
+#### Connection termination using three-way handshake
+<img width="799" alt="image" src="https://user-images.githubusercontent.com/49769190/177031423-9dcfed53-2d15-4d38-b302-ae74b6fe9d4d.png">
+* data 전송이 끝난 뒤 연결 종료 과정
+
+<순서>
+순서
+1. 클라이언트는 Control field의 FIN에 1을 셋팅해 종료요청 패킷임을 명시한 뒤 해당 패킷을 서버에게 보내 연결 종료를 요청한다.
+2. 서버는 ACK을 클라이언트에게 전송해 종료요청을 허가(SYN에 대한 응답)한다. 동시에 SYN을 클라이언트에게 보내 서버도 종료요청을 한다. 클라이언트 sending 버퍼 삭제.
+3. 클라이언트는 서버가 보낸 SYN에 ACK을 보내 응답한다. 
+4. 연결 종료 및 버퍼 삭제
+
+
+#### Half-Close 반만 종료
+<img width="690" alt="image" src="https://user-images.githubusercontent.com/49769190/177031467-3d8c7c03-0096-44eb-ad4e-c85a61b56772.png">
+1. 클라이언트가 서버에게 FIN 요청을 보낸다.
+2. 서버가 ACK을 보내 연결 종료 요청에 응답했다. 이때 클라이언트의 sending buffer가 소멸되지만 recieving buffer는 남아있으므로 서버가 보낸 데이터를 읽을 수는 있다. 
+3. 클라이언트의 close 요청 수락 후에도 서버가 보낼 데이터 있으면 계속 보낸다. 서버는 클라이언트에게 보낼 데이터를 다 보내고 FIN을 보내 연결 종료를 요청한다. 
+4. 클라이언트는 ACK을 보내 연결 종료 요청에 응답한다.(sending buffer가 삭제된 상태이므로 다른 말은 못하고 응답만 할 수 있음)
+5. 연결 종료
+ 
+
+#### Error Control
+* TCP는 신뢰할 수 있는 transport layer 프로토콜이다.
+* TCP로 데이터 스트림을 전송하는 응용 프로그램은 TCP에 의존해 전체 스트림을 반대쪽 끝에 있는 응용 프로그램에 오류 없이 순서대로 전달할 수 있다.
+* TCP의 Error Control(오류 제어)는 checksum, acknowledgment, and time-out의 세 가지 tool 사용
+
+
+* ACK에 대한 ACK은 존재하지 않는다. 즉, 내가 보낸 ACK을 상대방이 잘 받았는지 확인하는 ACK은 존재하지 않는다.
+* 데이터는 순서가 잘못된 상태로 도착하여 receiving TCP에 의해 일시적으로 저장될 수 있지만, TCP는 순서가 잘못된 데이터가 프로세스에 전달되지 않도록 보장한다. → TCP는 receiving buffer에서 application으로 데이터를 전송할 시 제대로 된 데이터만 올려보낸다(신뢰성 보장). 
+* 순서 바뀐 것은 아예 process로 전달되지 않음
+
+#### Normal Operation
+* 일반적인 데이터 전송 과정.
+* sender가 data를 보내면 receiver는 보낸 data를 잘 받았고 다음 패킷을 보내달라는 의미로 ACK을 전송
+* 이때 상대에게 전송하는 ACK의 갯수를 줄이기 위한 Rule 1, 2, 3이 존재
+
+<img width="867" alt="image" src="https://user-images.githubusercontent.com/49769190/177032038-56e015da-d939-47b2-984b-e9815582600f.png">
+
+1. Rule 1
+* 데이터를 받았을 때 ACK을 보내야 하는데 ACK을 바로 보내는 게 아니라 Buffer에 보낼 데이터가 있는지 확인하고 보낼 데이터가 있으면 같이 보냄(= ACK가는 김에 데이터도 같이 가자)
+ 
+2. Rule 2
+* Sender는 패킷을 송신하고 나면 별도로 정의된 Timer(ACK-delaying timer)를 켜놓고 정해진 시간 동안 대기한다. 위의 그림에서는 지연 시간을 50ms로 설정하였다. 50ms까지 기다려도 Buffer에 보낼 데이터가 없을 시 데이터 없이 ACK만 전송한다.
+ 
+3. Rule 3
+* timer를 켜놓고 기다리는 중에 패킷이 하나 더 도착하면 더 이상 안 기다리고 바로 ACK을 전송한다.(=데이터가 없는 상황에 패킷 2개 들어오면 2개당 ACK 하나는 보내자)
+
+### Congestion Control
+
+#### Slow start, exponential increase
+<img width="654" alt="image" src="https://user-images.githubusercontent.com/49769190/177033638-4c8c1ae7-2177-4698-a022-9d5c486a991d.png">
+* Slow start 방식은 미리 정해진 값(Threshold)까지 패킷 양을 이전에 전송한 양의 2배씩 늘리고
+* 미리 정해진 값에 도달하면 이후부터는 +1씩 보수적으로 전송량을 늘리는(Congestion avoidance) 방식 
+* exponential increase: 전송량을 두 배씩 늘리는 방식
+
+* 혼잡제어를 고려하지 않았을 때의 데이터 전송방식을 생각해 보자.(flow control) -> 왜 slow start이라고 부를까?
+*만약 Receiver의 수신버퍼 크기가 6500byte라면 Sender는 초기에 수신 버퍼를 가득 채울 만큼의 패킷을 전부 전송한다. 이는 전송량을 1에서부터 시작하여 2배씩 늘려가는 slow start 방식보다는 훨씬 빨리 데이터를 전송할 수 있는 방법이다.
+* 따라서 flow control보다 훨씬 느린 데이터 전송 방식
+
+
+#### congestion avoidance, additive increase
+* 데이터 혼잡을 피하기 위해서 tcp에서는 데이터 전송량을 결정
+* 전송할 데이터의 크기, 즉 window size는 rwnd와 cwnd의 최솟값으로 정해짐.
+
+
+<img width="817" alt="image" src="https://user-images.githubusercontent.com/49769190/177033527-59f9d02d-47c5-43a6-a0dd-40f29d261970.png">
+* TCP에는 중앙에서 네트워크의 상태에 따라 각 connection의 데이터 전송량을 관리해 줄 관리자가 존재하지 않는다. 
+* 따라서 각 connection에서는 자율적으로 데이터 전송량을 조절한다.
+* 각 connection은 혼잡이 감지되지 않는 한 계속해서 데이터 전송량을 늘리는 방식으로 데이터를 전송함.
+* Sender는 보낸 패킷에 대한 응답(Ack)이 무사히 도착했다면(packet loss가 발생하지 않았다면), 네트워크에 혼잡이 없었다고 생각한다.
+* Congestion avoidance방식은 데이터에 혼잡이 발생하지 않는 한 이전 전송량에서 데이터를 하나씩 더 늘려 전송하는 방식이다.
+* additive increase는 데이터를 하나씩 보수적으로 증가하는 방식이다. 
+* 만약 packet loss가 발생한다면, 혼잡이 발생했다고 파악하고 해당 네트워크를 사용 중인 모든 connection은 데이터 전송량을 반으로 줄인다. 
+
+
+
+* RTT(Round Trip Time, 왕복시간)
+* 연결 setup 과정이 완료된 상태라고 가정.
+* 이 그림에서 rwnd는 고려하지 않는다. 즉, rwnd는 충분히 크기 때문에 전송량에 영향을 미치지 않는다고 가정한다.
+
+
+
 ### 🍋참고🍋
 * https://seungyooon.tistory.com/187
 * https://velog.io/@hidaehyunlee/IP-address%EB%9E%80
