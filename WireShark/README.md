@@ -1,4 +1,6 @@
- 
+# ftp 파일 주고받기
+<img width="233" alt="image" src="https://user-images.githubusercontent.com/49769190/178702863-add6f63c-aad0-481e-85f1-69907233f615.png">
+
 # WireShark 패킷분석
 
 <img width="920" alt="image" src="https://user-images.githubusercontent.com/49769190/175260877-c64d3394-fd85-4993-9997-b9b736dc4893.png">
